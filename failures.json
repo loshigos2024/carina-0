@@ -1,0 +1,167 @@
+{
+  "reasoning_failures": [
+    {
+      "id": "RF001",
+      "name": "unsuccess action",
+      "input": {
+        "attribute": "name"
+      },
+      "causes": [
+        "E001"
+      ],
+      "explanation": [
+        {
+          "id": "1",
+          "human_explanation": "we didn't find an student with at least 3 HIGT skill mastery"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "RF002",
+      "name": "no student returned",
+      "input": {
+        "attribute": "name"
+      },
+      "causes": [
+        "E002"
+      ],
+      "explanation": [
+        {
+          "id": "1",
+          "human_explanation": "the output of the action is None"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "RF003",
+      "name": "unfinished action",
+      "input": {
+        "attribute": "name"
+      },
+      "causes": [
+        "E003"
+      ],
+      "explanation": [
+        {
+          "id": "1",
+          "human_explanation": "the action took too much time to complete"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "RF004",
+      "name": "response time out of limit",
+      "input": {
+        "attribute": "name"
+      },
+      "causes": [
+        "E004"
+      ],
+      "explanation": [
+        {
+          "id": "1",
+          "human_explanation": "the action reached the maximum amount of time given"
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "RF005",
+      "name": "pattern anomaly",
+      "input": {
+        "attribute": "name"
+      },
+      "causes": [
+        "E005"
+      ],
+      "explanation": [
+        {
+          "id": "1",
+          "human_explanation": "the action returned a failure pattern within its results"
+        }
+      ],
+      "recommendations": [
+        "R001"
+      ]
+    }
+  ],
+  "expectations": [
+    {
+      "id": "E001",
+      "name": "action.success must be True",
+      "action_type": "PickUpStudentRandomly",
+      "input": {
+        "attribute": "success",
+        "constraint": "=",
+        "expected_value": true
+      }
+    },
+    {
+      "id": "E002",
+      "name": "action.output must be different to None",
+      "action_type": "PickUpStudentByConstraint",
+      "input": {
+        "attribute": "output",
+        "constraint": "!=",
+        "expected_value": null
+      }
+    },
+    {
+      "id": "E003",
+      "name": "finished action",
+      "action_type": "PickUpStudentWithPerfectScore",
+      "input": {
+        "attribute": "action_completed",
+        "constraint": "=",
+        "expected_value": true
+      }
+    },
+    {
+      "id": "E004",
+      "name": "optimal response time (less than 2 seconds)",
+      "action_type": "Action",
+      "input": {
+        "attribute": "delay_time",
+        "constraint": "<=",
+        "expected_value": 2
+      }
+    },
+    {
+      "id": "E005",
+      "name": "failure pattern",
+      "action_type": "Action",
+      "input": {
+        "attribute": "profiles",
+        "constraint": "!=",
+        "expected_value": [false, false]
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "R001",
+      "name": "change the success to true",
+      "goal": [
+        {
+          "attribute": "success",
+          "constraint": "=",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "R002",
+      "name": "get an student",
+      "goal": [
+        {
+          "attribute": "output",
+          "constraint": "!=",
+          "value": null
+        }
+      ]
+    }
+  ]
+}
